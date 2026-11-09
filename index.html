@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>جهێ ناڤونیشانێن سندوق و پیڤەران</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #f0fdf4;
+      --bg-gradient: linear-gradient(135deg, #f0fdf4 0%, #ecfeff 100%);
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --primary: #0d9488;
+      --primary-hover: #0f766e;
+      --accent: #14b8a6;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --error-bg: #fef2f2;
+      --error-border: #fecaca;
+      --error-text: #dc2626;
+      --success-bg: #f0fdf4;
+      --success-border: #bbf7d0;
+      --success-text: #16a34a;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background: var(--bg-base);
+      background-image: var(--bg-gradient);
+      color: var(--text-main);
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      direction: rtl;
+      text-align: right;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 580px;
+    }
+
+    .glass-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 36px;
+      box-shadow: 0 10px 30px rgba(13, 148, 136, 0.08), 
+                  0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: #ccfbf1;
+      border: 1px solid #99f6e4;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #0f766e;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin: 0 0 8px 0;
+      letter-spacing: -0.02em;
+      color: #0f172a;
+    }
+
+    p.subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin: 0 0 32px 0;
+      line-height: 1.5;
+    }
+
+    .form-group {
+      margin-bottom: 22px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    input[type="text"], input[type="url"] {
+      width: 100%;
+      background: #f8fafc;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 1rem;
+      color: var(--text-main);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      text-align: right;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+      background: #ffffff;
+    }
+
+    input.input-error {
+      border-color: var(--error-text) !important;
+      background-color: var(--error-bg) !important;
+    }
+
+    .meters-section {
+      background: #f8fafc;
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 20px;
+      margin-top: 24px;
+    }
+
+    .meters-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .meters-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .meter-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+      align-items: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .meter-row input {
+      flex: 1;
+    }
+
+    .btn-icon {
+      background: #fee2e2;
+      border: 1px solid #fecaca;
+      color: #dc2626;
+      width: 46px;
+      height: 46px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .btn-icon:hover:not(:disabled) {
+      background: #fecaca;
+      border-color: #fca5a5;
+    }
+
+    .btn-icon:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      border: 1px solid var(--card-border);
+      color: var(--primary);
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    .btn-secondary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-primary {
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary), #0f766e);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 16px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 28px;
+      box-shadow: 0 4px 14px rgba(13, 148, 136, 0.3);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(13, 148, 136, 0.4);
+      background: linear-gradient(135deg, #0f766e, #115e59);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    #statusMessage {
+      display: none;
+      margin-top: 20px;
+      padding: 14px 16px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .status-error {
+      background-color: var(--error-bg);
+      border: 1px solid var(--error-border);
+      color: var(--error-text);
+    }
+
+    .status-success {
+      background-color: var(--success-bg);
+      border: 1px solid var(--success-border);
+      color: var(--success-text);
+    }
+
+    /* Mobile Responsiveness Enhancements */
+    @media (max-width: 480px) {
+      body {
+        padding: 12px;
+      }
+      .glass-card {
+        padding: 20px;
+        border-radius: 16px;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+      input[type="text"], input[type="url"] {
+        padding: 12px 14px;
+        font-size: 0.95rem;
+      }
+      .btn-primary {
+        padding: 14px;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="glass-card">
+      <div class="header-badge">
+        <span> تومارکرنا جهێ سندوق و پیڤەرێن هاتین گرێدان⚡</span>
+      </div>
+      <h1>سندوق و پیڤەر</h1>
+      <p class="subtitle"></p>
+
+      <form id="enclosureForm" novalidate>
+        <div class="form-group">
+          <label for="enclosureId">ژمارا سندوقێ (Enclosure ID)</label>
+          <div class="input-wrapper">
+            <input type="text" id="enclosureId" name="enclosureId" placeholder="ئایدیێ سندوقێ ل ڤێرێ بنڤیسە" required autocomplete="off">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="enclosureLocation">لۆکەیشنا قووتیێ (گوگل ماپس یان ئایفۆن ماپس)</label>
+          <div class="input-wrapper">
+            <input type="url" id="enclosureLocation" name="enclosureLocation" placeholder=" (Google Maps یان Apple Maps)لينكێ نەخشەیی ل ڤێرێ دانە " required autocomplete="off" dir="ltr" style="text-align: left;">
+          </div>
+        </div>
+
+        <div class="meters-section">
+          <div class="meters-header">
+            <span class="meters-title">ژمارا پیڤەری (Meter ID)</span>
+            <span id="meterCounterBadge" style="font-size: 0.8rem; color: var(--text-muted);">1 / 5</span>
+          </div>
+          <div id="meterListContainer"></div>
+          <button type="button" id="addMeterBtn" class="btn-secondary">+ پیڤەرەک دی زێدە بکە</button>
+        </div>
+
+        <button type="submit" id="submitBtn" class="btn-primary">تۆمار بکە</button>
+        <div id="statusMessage"></div>
+      </form>
+
+      <!-- Luxurious Developer Signature Credit -->
+      <div style="margin-top: 28px; padding-top: 18px; border-top: 1px dashed var(--card-border); text-align: center;">
+        <p style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500; letter-spacing: 0.03em; margin: 0;">
+          هاتیە ئامادەکرن ژ لایێ : <span style="color: var(--primary); font-weight: 700;">Mohammed Khudhir Jameel</span>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz_DpImdvHW27JR8qE8QkEt-4yQsNREtdwGFuacPCBIwRD4rvyjgWStMNTbrrZRwj3c/exec";
+
+    const form = document.getElementById("enclosureForm");
+    const enclosureIdInput = document.getElementById("enclosureId");
+    const enclosureLocationInput = document.getElementById("enclosureLocation");
+    const meterListContainer = document.getElementById("meterListContainer");
+    const addMeterBtn = document.getElementById("addMeterBtn");
+    const meterCounterBadge = document.getElementById("meterCounterBadge");
+    const submitBtn = document.getElementById("submitBtn");
+    const statusMessage = document.getElementById("statusMessage");
+
+    const MAX_METERS = 5;
+
+    const localRegistry = JSON.parse(localStorage.getItem("enclosureRegistryFresh")) || {
+      enclosureIds: [],
+      locations: [],
+      meterIds: []
+    };
+
+    const normalize = (val) => val.trim().toUpperCase();
+
+    function renderMeters() {
+      const rows = meterListContainer.querySelectorAll(".meter-row");
+      const currentCount = rows.length;
+
+      meterCounterBadge.textContent = `${currentCount} / ${MAX_METERS}`;
+      addMeterBtn.disabled = currentCount >= MAX_METERS;
+
+      meterListContainer.querySelectorAll(".delete-meter-btn").forEach(btn => {
+        btn.disabled = currentCount <= 1;
+      });
+    }
+
+    function addMeterRow(value = "") {
+      const currentRows = meterListContainer.querySelectorAll(".meter-row");
+      if (currentRows.length >= MAX_METERS) return;
+
+      const row = document.createElement("div");
+      row.className = "meter-row";
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.className = "meter-id-input";
+      input.value = value;
+      input.placeholder = "ئایدیێ میتەری ل ڤێرێ بنڤیسە";
+      input.required = true;
+      input.autocomplete = "off";
+
+      const deleteBtn = document.createElement("button");
+      deleteBtn.type = "button";
+      deleteBtn.className = "btn-icon delete-meter-btn";
+      deleteBtn.innerHTML = "✕";
+      deleteBtn.title = "پیڤەرەکی ژێبە";
+
+      deleteBtn.addEventListener("click", () => {
+        if (meterListContainer.querySelectorAll(".meter-row").length > 1) {
+          row.remove();
+          renderMeters();
+        }
+      });
+
+      row.appendChild(input);
+      row.appendChild(deleteBtn);
+      meterListContainer.appendChild(row);
+      renderMeters();
+    }
+
+    addMeterRow();
+    addMeterBtn.addEventListener("click", () => addMeterRow());
+
+    function showStatus(text, isError = false) {
+      statusMessage.style.display = "block";
+      statusMessage.textContent = text;
+      statusMessage.className = isError ? "status-error" : "status-success";
+    }
+
+    function clearErrors() {
+      document.querySelectorAll("input").forEach(el => el.classList.remove("input-error"));
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      clearErrors();
+      statusMessage.style.display = "none";
+
+      const enclosureId = enclosureIdInput.value.trim();
+      const enclosureLocation = enclosureLocationInput.value.trim();
+      const meterInputs = Array.from(document.querySelectorAll(".meter-id-input"));
+      const meterIds = meterInputs.map(i => i.value.trim());
+
+      if (!enclosureId || !enclosureLocation || meterIds.some(id => !id)) {
+        showStatus("پێدڤیە هەمی داتایان داگری.", true);
+        return;
+      }
+
+      // 🛑 Check if the location input is a valid Google Maps or Apple Maps link
+      const isGoogleMaps = enclosureLocation.includes("google.com/maps") || enclosureLocation.includes("goo.gl/maps") || enclosureLocation.includes("maps.app.goo.gl");
+      const isAppleMaps = enclosureLocation.includes("maps.apple.com");
+
+      if (!isGoogleMaps && !isAppleMaps) {
+        enclosureLocationInput.classList.add("input-error");
+        showStatus("لۆکەیشنا هاتییە ڤەدیتن نە یا دروستە. ب تنێ لینکێن (Google Maps) یان (Apple Maps) قەبوول دکەت.", true);
+        return;
+      }
+
+      const seenFormMeters = new Set();
+      for (let i = 0; i < meterIds.length; i++) {
+        const norm = normalize(meterIds[i]);
+        if (seenFormMeters.has(norm)) {
+          meterInputs[i].classList.add("input-error");
+          showStatus(`ژمارا مەتەرا دووبارە "${meterIds[i]}" د ڤی فرمی دۆ تییە دیتن.`, true);
+          return;
+        }
+        seenFormMeters.add(norm);
+      }
+
+      if (seenFormMeters.has(normalize(enclosureId))) {
+        enclosureIdInput.classList.add("input-error");
+        showStatus("ژمارا سندوق و پیڤەری چێنابت دووبارە بت.", true);
+        return;
+      }
+
+      if (localRegistry.enclosureIds.includes(normalize(enclosureId))) {
+        enclosureIdInput.classList.add("input-error");
+        showStatus(`ژمارا سندوقێ "${enclosureId}" بەری نۆکە هاتییە تۆمارکرن.`, true);
+        return;
+      }
+
+      if (localRegistry.locations.includes(normalize(enclosureLocation))) {
+        enclosureLocationInput.classList.add("input-error");
+        showStatus(`ئەڤ لۆکەیشنه به ری نۆکە هاتییە تۆمارکرن.`, true);
+        return;
+      }
+
+      for (let i = 0; i < meterIds.length; i++) {
+        if (localRegistry.meterIds.includes(normalize(meterIds[i]))) {
+          meterInputs[i].classList.add("input-error");
+          showStatus(`ژمارا پیڤەری "${meterIds[i]}" بەری نۆکە د سیستەمی دایە.`, true);
+          return;
+        }
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "دهێتە ڕاستڤەکرن و هنارتن...";
+
+      try {
+        const response = await fetch(SCRIPT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({
+            enclosureId,
+            enclosureLocation,
+            meterCount: meterIds.length,
+            meterIds
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.status === "success") {
+          localRegistry.enclosureIds.push(normalize(enclosureId));
+          localRegistry.locations.push(normalize(enclosureLocation));
+          meterIds.forEach(id => localRegistry.meterIds.push(normalize(id)));
+          localStorage.setItem("enclosureRegistryFresh", JSON.stringify(localRegistry));
+
+          showStatus("ب سەرکەفتن هاتە تۆمارکرن و پشتڕاستکرن!", false);
+          form.reset();
+          meterListContainer.innerHTML = "";
+          addMeterRow();
+        } else {
+          showStatus(result.message || "تۆمارکرنا دووبارە ژ ئالیێ سیستەمی ڤە هاتە رەتکرن.", true);
+        }
+      } catch (err) {
+        showStatus("خەلەتیا گرێدانێ.", true);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "تۆمار بکە";
+      }
+    });
+  </script>
+</body>
+</html>
