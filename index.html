@@ -321,7 +321,7 @@
         <div class="meters-section">
           <div class="meters-header">
             <span class="meters-title">ژمارا پیڤەری (Meter ID)</span>
-            <span id="meterCounterBadge" style="font-size: 0.8rem; color: var(--text-muted);">1 / 5</span>
+            <span id="meterCounterBadge" style="font-size: 0.8rem; color: var(--text-muted);">1</span>
           </div>
           <div id="meterListContainer"></div>
           <button type="button" id="addMeterBtn" class="btn-secondary">+ پیڤەرەک دی زێدە بکە</button>
@@ -353,7 +353,7 @@
     const submitBtn = document.getElementById("submitBtn");
     const statusMessage = document.getElementById("statusMessage");
 
-    const MAX_METERS = 5;
+    const MAX_METERS = Infinity;
 
     const localRegistry = JSON.parse(localStorage.getItem("enclosureRegistryFresh")) || {
       enclosureIds: [],
@@ -367,7 +367,7 @@
       const rows = meterListContainer.querySelectorAll(".meter-row");
       const currentCount = rows.length;
 
-      meterCounterBadge.textContent = `${currentCount} / ${MAX_METERS}`;
+      meterCounterBadge.textContent = `${currentCount}`;
       addMeterBtn.disabled = currentCount >= MAX_METERS;
 
       meterListContainer.querySelectorAll(".delete-meter-btn").forEach(btn => {
